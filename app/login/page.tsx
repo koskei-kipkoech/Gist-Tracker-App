@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { GithubIcon, Loader2 } from "lucide-react"
+import { AuthError } from "@/lib/errors"
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -58,12 +59,16 @@ export default function LoginPage() {
       const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.message || "Invalid credentials")
+        throw new AuthError(result.message || "Invalid credentials")
       }
 
       router.push("/dashboard")
-    } catch (err: any) {
-      setError(err.message || "An error occurred during login")
+    } catch (err) {
+      if (err instanceof AuthError) {
+        setError(err.message)
+      } else {
+        setError("An error occurred during login")
+      }
     } finally {
       setIsLoading(false)
     }
