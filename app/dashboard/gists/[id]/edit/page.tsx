@@ -139,7 +139,7 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
     <div className="container py-8">
       <div className="mb-6 flex items-center">
         <Link href={`/dashboard/gists/${params.id}`}>
-          <Button variant="ghost" size="sm">
+          <Button variant="outline" className="ml-3 cursor-pointer bg-blue-400 hover:bg-blue-500 hover:text-white hover:scale-105 transition-all duration-200" size="sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Gist
           </Button>
@@ -200,13 +200,17 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                       <FormLabel>Language</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a language" />
+                          <SelectTrigger className="w-full bg-background/50 hover:bg-accent/50 transition-colors">
+                            <SelectValue placeholder="Select a language" className="text-muted-foreground" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent>
+                        <SelectContent className="max-h-[300px] overflow-y-auto bg-background/95 backdrop-blur-sm border border-border/50">
                           {languageOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
+                            <SelectItem 
+                              key={option.value} 
+                              value={option.value}
+                              className="hover:bg-accent/80 cursor-pointer transition-colors py-2.5 px-3"
+                            >
                               {option.label}
                             </SelectItem>
                           ))}
@@ -224,7 +228,18 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                     <FormItem>
                       <FormLabel>Content</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Paste your code here" className="min-h-[200px] font-mono" {...field} />
+                        <Textarea 
+                          placeholder="Paste your code here" 
+                          className="min-h-[400px] font-mono text-sm leading-relaxed tracking-wide
+                            bg-zinc-950/10 dark:bg-zinc-50/10 backdrop-blur-sm
+                            border border-zinc-200 dark:border-zinc-800
+                            focus:border-zinc-400 dark:focus:border-zinc-600
+                            focus:ring-2 focus:ring-zinc-400/20 dark:focus:ring-zinc-600/20
+                            rounded-lg p-4 transition-all duration-200
+                            hover:bg-zinc-950/5 dark:hover:bg-zinc-50/5"
+                          spellCheck="false"
+                          {...field} 
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -249,6 +264,7 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
 
                 <div className="flex justify-end space-x-4">
                   <Button
+                    className="cursor-pointer bg-gray-400  hover:bg-gray-500 hover:text-white hover:scale-105 transition-all duration-200 "
                     type="button"
                     variant="outline"
                     onClick={() => router.push(`/dashboard/gists/${params.id}`)}
@@ -256,7 +272,7 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={isSaving}>
+                  <Button type="submit" disabled={isSaving} className="cursor-pointer bg-red-400  hover:bg-red-500 hover:text-white hover:scale-105 transition-all duration-200">
                     {isSaving ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

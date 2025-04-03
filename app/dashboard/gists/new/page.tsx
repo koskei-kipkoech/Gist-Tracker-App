@@ -141,13 +141,17 @@ export default function NewGistPage() {
                       <FormLabel>Language</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="bg-background/50 backdrop-blur-sm border-muted">
                             <SelectValue placeholder="Select a language" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent>
+                        <SelectContent className="max-h-[300px] overflow-y-auto bg-background/80 backdrop-blur-sm border-muted">
                           {languageOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
+                            <SelectItem
+                              key={option.value}
+                              value={option.value}
+                              className="cursor-pointer transition-colors hover:bg-muted/50 focus:bg-muted/50 py-2.5"
+                            >
                               {option.label}
                             </SelectItem>
                           ))}
@@ -165,7 +169,12 @@ export default function NewGistPage() {
                     <FormItem>
                       <FormLabel>Content</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Paste your code here" className="min-h-[200px] font-mono" {...field} />
+                        <Textarea 
+                          placeholder="Paste your code here" 
+                          className="min-h-[200px] font-mono bg-muted/50 p-4 rounded-md border-2 border-muted hover:border-muted-foreground/50 focus:border-primary transition-colors duration-200 resize-y leading-relaxed tracking-wide selection:bg-primary/20"
+                          spellCheck="false"
+                          {...field} 
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -190,6 +199,7 @@ export default function NewGistPage() {
 
                 <div className="flex justify-end space-x-4">
                   <Button
+                    className="ursor-pointer bg-gray-500 hover:bg-gray-700 hover:text-white hover:scale-105 transition-all duration-200 "
                     type="button"
                     variant="outline"
                     onClick={() => router.push("/dashboard")}
@@ -197,7 +207,7 @@ export default function NewGistPage() {
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={isLoading}>
+                  <Button variant="outline" type="submit" className="cursor-pointer bg-teal-500 hover:bg-teal-700 hover:text-white hover:scale-105 transition-all duration-200" disabled={isLoading}>
                     {isLoading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

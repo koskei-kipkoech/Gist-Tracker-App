@@ -105,6 +105,15 @@ export default function ProfilePage() {
     }
   }
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccess(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
   if (isLoading) {
     return (
       <div className="container py-8 flex justify-center items-center min-h-[60vh]">
@@ -130,13 +139,13 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-4">
-                <Avatar className="h-16 w-16">
-                  <AvatarImage src={`https://github.com/${user?.githubUsername || "ghost"}.png`} alt={user?.name} />
-                  <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
+                <Avatar className="h-16 w-16 ring-2 ring-primary/20 transition-all duration-300 hover:scale-105 hover:ring-4 hover:ring-primary/40 hover:shadow-lg hover:shadow-primary/20 cursor-pointer bg-teal-500">
+                  <AvatarImage src={`https://github.com/${user?.githubUsername || "ghost"}.png`} alt={user?.name} className="object-cover  transition-opacity duration-300 hover:opacity-90" />
+                  <AvatarFallback className="bg-primary/5 text-lg font-extrabold text-black text-shadow-cyan-600 transition-colors duration-300 hover:bg-primary/10">{user?.name?.charAt(0) || "U"}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <CardTitle>{user?.name}</CardTitle>
-                  <CardDescription>{user?.email}</CardDescription>
+                  <CardTitle className="mb-2 cursor-pointer">{user?.name}</CardTitle>
+                  <CardDescription className="cursor-pointer">{user?.email}</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -205,7 +214,7 @@ export default function ProfilePage() {
                   />
 
                   <div className="flex justify-end gap-2">
-                    <Button type="submit" disabled={isSaving}>
+                    <Button type="submit" variant="outline" className="cursor-pointer bg-gray-400 hover:bg-gray-600 hover:text-white hover:scale-105 transition-all duration-200" disabled={isSaving}>
                       {isSaving ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -216,7 +225,8 @@ export default function ProfilePage() {
                       )}
                     </Button>
                     <Button 
-                      variant="destructive" 
+                      variant="outline" 
+                      className="cursor-pointer bg-red-400 hover:bg-red-600 hover:text-white hover:scale-105 transition-all duration-200"
                       onClick={async () => {
                         if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
                           try {
