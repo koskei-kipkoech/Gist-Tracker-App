@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { GithubIcon, Loader2 } from "lucide-react"
+import { AuthError } from "@/lib/errors"
 
 const signupSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -56,8 +57,12 @@ export default function SignupPage() {
       }
 
       router.push("/login?success=Account created successfully")
-    } catch (err: any) {
-      setError(err.message || "An error occurred during signup")
+    } catch (err) {
+      if (err instanceof AuthError) {
+        setError(err.message)
+      } else {
+        setError("An error occurred during signup")
+      }
     } finally {
       setIsLoading(false)
     }
