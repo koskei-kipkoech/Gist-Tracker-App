@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 import { removeAuthCookie } from "@/lib/auth"
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   removeAuthCookie()
 
   return NextResponse.json({ message: "Logged out successfully" }, { status: 200 })
