@@ -45,8 +45,8 @@ export default function DeleteGistButton({ id }: { id: string }) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" size="sm" className="text-destructive">
-          <Trash2 className="mr-2 h-4 w-4" />
+        <Button variant="outline" size="sm" className="cursor-pointer bg-red-400 text-destructive hover:bg-red-500 transform hover:scale-105 hover:shadow-md transition-all duration-200">
+          <Trash2 className=" mr-2 h-4 w-4" />
           Delete
         </Button>
       </AlertDialogTrigger>
@@ -58,18 +58,18 @@ export default function DeleteGistButton({ id }: { id: string }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel className="cursor-pointer bg-gray-400 hover:bg-gray-500 transition-colors duration-200" disabled={isDeleting}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={(e) => {
               e.preventDefault()
               deleteGist()
             }}
             disabled={isDeleting}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            className="bg-destructive cursor-pointer bg-red-400 text-destructive-foreground hover:bg-red-600 transition-colors duration-200"
           >
             {isDeleting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className=" mr-2 h-4 w-4 animate-spin" />
                 Deleting...
               </>
             ) : (
