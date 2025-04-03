@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createUser } from "@/lib/auth"
+import { AuthError, ValidationError, DatabaseError } from "@/lib/errors"
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,11 +19,14 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ message: "User created successfully", userId: user._id }, { status: 201 })
-  } catch (error: any) {
-    return NextResponse.json(
-      { message: error.message || "Something went wrong" },
-      { status: error.message === "User already exists" ? 409 : 500 },
-    )
+  } catch (error) {
+    if (error instanceof ValidationError || error instanceof AuthError) {
+      return NextResponse.json({ message: error.message }, { status: error.statusCode })
+    }
+    if (error instanceof DatabaseError) {
+      return NextResponse.json({ message: "Database error occurred" }, { status: error.statusCode })
+    }
+    return NextResponse.json({ message: "Something went wrong" }, { status: 500 })
   }
 }
 
