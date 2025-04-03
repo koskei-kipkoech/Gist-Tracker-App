@@ -76,8 +76,8 @@ export default function LoginPage() {
 
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      <Link href="/" className="absolute left-4 top-4 md:left-8 md:top-8">
-        <Button variant="ghost">← Back</Button>
+      <Link href="/" className="absolute cursor-pointer bg-amber-950 left-4 top-4 md:left-8 md:top-8">
+        <Button variant="outline">← Back</Button>
       </Link>
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
@@ -123,7 +123,7 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button variant="outline" type="submit" className="cursor-pointer mt-10 w-full bg-amber-950" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -144,7 +144,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter>
           <Button variant="outline" className="w-full" disabled={isLoading}>
-            <GithubIcon className="mr-2 h-4 w-4" />
+            <GithubIcon className="mr-2 cursor-pointer h-4 w-4 bg-amber-950" />
             Login with GitHub
           </Button>
         </CardFooter>

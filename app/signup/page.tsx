@@ -70,8 +70,8 @@ export default function SignupPage() {
 
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      <Link href="/" className="absolute left-4 top-4 md:left-8 md:top-8">
-        <Button variant="ghost">← Back</Button>
+      <Link href="/" className="absolute cursor-pointer left-4 top-4 md:left-8 md:top-8 bg-amber-950">
+        <Button variant="outline">← Back</Button>
       </Link>
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
@@ -89,7 +89,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} />
+                      <Input placeholder="Kipkoech" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -102,7 +102,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="john@example.com" {...field} />
+                      <Input type="email" placeholder="kipkoech@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,7 +115,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="********" {...field} />
+                      <Input type="password" placeholder="***********" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -128,13 +128,13 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>GitHub Username (Optional)</FormLabel>
                     <FormControl>
-                      <Input placeholder="johndoe" {...field} />
+                      <Input placeholder="kipkipp" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button variant="outline" type="submit" className="cursor-pointer mt-10 w-full bg-amber-950" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -146,7 +146,7 @@ export default function SignupPage() {
               </Button>
             </form>
           </Form>
-          <div className="mt-4 text-center text-sm">
+          <div className="mt-4 text-center text-sm ">
             Already have an account?{" "}
             <Link href="/login" className="underline">
               Login
@@ -155,7 +155,7 @@ export default function SignupPage() {
         </CardContent>
         <CardFooter>
           <Button variant="outline" className="w-full" disabled={isLoading}>
-            <GithubIcon className="mr-2 h-4 w-4" />
+            <GithubIcon className="cursor-pointer mr-2 h-4 w-4 bg-amber-950" />
             Sign up with GitHub
           </Button>
         </CardFooter>
