@@ -1,5 +1,5 @@
 import { cookies } from "next/headers"
-import type { NextRequest } from "next/server"
+// import type { NextRequest } from "next/server"
 import { compare, hash } from "bcryptjs"
 import jwt from "jsonwebtoken"
 import User, { type IUser } from "./models/user"
@@ -56,7 +56,7 @@ export async function authenticateUser(email: string, password: string) {
   return user
 }
 
-export function generateToken(user: any) {
+export function generateToken(user: IUser & { _id: string }) {
   return jwt.sign(
     {
       userId: user._id.toString(),
@@ -99,12 +99,12 @@ export async function getCurrentUser() {
     await connectDB()
     const user = await User.findById(decoded.userId).select("-password")
     return user
-  } catch (error) {
+  } catch {
     return null
   }
 }
 
-export async function requireAuth(request: NextRequest) {
+export async function requireAuth() {
   const user = await getCurrentUser()
 
   if (!user) {
