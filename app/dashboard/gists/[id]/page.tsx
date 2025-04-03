@@ -32,9 +32,9 @@ export default async function GistPage({ params }: { params: { id: string } }) {
   return (
     <div className="container py-8">
       <div className="mb-6 flex items-center">
-        <Link href="/dashboard">
-          <Button variant="outline" size="sm">
-            <ArrowLeft className="cursor-pointer bg-blue-500 bmr-2 h-4 w-4" />
+        <Link href="/dashboard" >
+          <Button variant="outline" className="ml-3 cursor-pointer bg-blue-500 hover:bg-blue-600 transform hover:scale-105 hover:shadow-md transition-all duration-200" size="sm">
+            <ArrowLeft className="bmr-2 h-4 w-4" />
             Back to Dashboard
           </Button>
         </Link>
@@ -43,19 +43,19 @@ export default async function GistPage({ params }: { params: { id: string } }) {
       <div className="grid gap-6">
         <Card>
           <CardHeader>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div className="m-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <CardTitle className="text-2xl">{gist.title}</CardTitle>
                 <CardDescription className="mt-2">{gist.description || "No description provided"}</CardDescription>
               </div>
               <div className="flex flex-wrap gap-2">
-                <Badge variant={gist.isPublic ? "default" : "secondary"}>{gist.isPublic ? "Public" : "Private"}</Badge>
-                <Badge variant="outline">{gist.language}</Badge>
+                <Badge variant={gist.isPublic ? "default" : "secondary"} className="cursor-pointer bg-teal-500 hover:bg-amber-900 hover:scale-105 transition-all duration-200">{gist.isPublic ? "Public" : "Private"}</Badge>
+                <Badge variant="outline" className="cursor-pointer bg-teal-500  hover:bg-blue-500 hover:text-white hover:scale-105 transition-all duration-200">{gist.language}</Badge>
               </div>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="rounded-md bg-muted p-4">
+            <div className="bg-gray-500 rounded-md bg-muted p-4">
               <pre className="overflow-x-auto">
                 <code>{gist.content}</code>
               </pre>
@@ -76,8 +76,8 @@ export default async function GistPage({ params }: { params: { id: string } }) {
           <CardFooter className="flex justify-between">
             <div className="flex gap-2">
               <Link href={`/dashboard/gists/${gist._id}/edit`}>
-                <Button variant="outline" size="sm">
-                  <Pencil className="mr-2 h-4 w-4" />
+                <Button variant="outline" className="cursor-pointer bg-orange-400 hover:bg-orange-500 transform hover:scale-105 hover:shadow-md transition-all duration-200" size="sm">
+                  <Pencil className=" mr-2 h-4 w-4" />
                   Edit
                 </Button>
               </Link>
