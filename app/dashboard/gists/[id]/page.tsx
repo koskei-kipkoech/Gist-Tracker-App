@@ -33,8 +33,8 @@ export default async function GistPage({ params }: { params: { id: string } }) {
     <div className="container py-8">
       <div className="mb-6 flex items-center">
         <Link href="/dashboard">
-          <Button variant="ghost" size="sm">
-            <ArrowLeft className="mr-2 h-4 w-4" />
+          <Button variant="outline" size="sm">
+            <ArrowLeft className="cursor-pointer bg-blue-500 bmr-2 h-4 w-4" />
             Back to Dashboard
           </Button>
         </Link>
