@@ -20,13 +20,13 @@ export default async function DashboardPage() {
   return (
     <div className="container py-8">
       <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Your Gists</h1>
-          <p className="text-muted-foreground">Manage and organize your code snippets</p>
+        <div >
+          <h1 className="ml-4 text-3xl font-bold tracking-tight">Your Gists</h1>
+          <p className="ml-4 ext-muted-foreground">Manage and organize your code snippets</p>
         </div>
         <Link href="/dashboard/gists/new">
-          <Button>
-            <PlusIcon className="mr-2 h-4 w-4" />
+          <Button className="cursor-pointer bg-amber-900">
+            <PlusIcon className=" mr-3 h-4 w-4" />
             New Gist
           </Button>
         </Link>
@@ -83,7 +83,7 @@ export default async function DashboardPage() {
               </CardFooter>
               <CardFooter className="pt-1">
                 <Link href={`/dashboard/gists/${gist._id}`} className="w-full">
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="cursor-pointer bg-amber-900 w-full">
                     View Gist
                   </Button>
                 </Link>
