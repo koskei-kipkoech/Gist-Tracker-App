@@ -58,8 +58,8 @@ export function DashboardNav() {
       </nav>
       <div className="ml-auto flex items-center gap-4">
         
-        <Button variant="outline" className="cursor-pointer mr-5 bg-gray-500" size="sm" onClick={handleLogout}>
-          <LogOutIcon className="h-4 w-4 mr-2 cursor-pointer bg-gray-500" />
+        <Button variant="outline" className="cursor-pointer mr-5 bg-gray-500 hover:bg-gray-600 transform hover:scale-105 hover:shadow-md transition-all duration-200" size="sm" onClick={handleLogout}>
+          <LogOutIcon className="h-4 w-4 mr-2" />
           Logout
         </Button>
       </div>
