@@ -75,13 +75,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      <Link href="/" className="absolute cursor-pointer bg-amber-950 left-4 top-4 md:left-8 md:top-8">
-        <Button variant="outline">← Back</Button>
+    <div className="container flex h-screen w-screen p-8 flex-col items-center justify-center">
+      <Link href="/" >
+        <Button className="absolute cursor-pointer transform hover:scale-105 hover:shadow-md  duration-200 bg-blue-500  left-6 top-5 md:left-8 md:top-8  hover:bg-blue-600" variant="ghost">←  Back</Button>
       </Link>
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Login</CardTitle>
+          <CardTitle className="text-2xl text-amber-800 cursor-pointer font-extrabold">Login</CardTitle>
           <CardDescription>Enter your credentials to access your account</CardDescription>
         </CardHeader>
         <CardContent>
@@ -104,7 +104,7 @@ export default function LoginPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="john@example.com" {...field} />
+                      <Input type="email" className="mt-2" placeholder="john@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -117,13 +117,13 @@ export default function LoginPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="********" {...field} />
+                      <Input type="password" className="mt-2" placeholder="********" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button variant="outline" type="submit" className="cursor-pointer mt-10 w-full bg-amber-950" disabled={isLoading}>
+              <Button variant="outline" type="submit" className="cursor-pointer mt-10 w-full bg-amber-950 hover:bg-amber-800 transform hover:scale-105 hover:shadow-md  duration-200" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -143,8 +143,8 @@ export default function LoginPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant="outline" className="w-full" disabled={isLoading}>
-            <GithubIcon className="mr-2 cursor-pointer h-4 w-4 bg-amber-950" />
+          <Button variant="outline" className="cursor-pointer transform bg-amber-950 hover:scale-105 hover:shadow-md  duration-200 w-full" disabled={isLoading}>
+            <GithubIcon className="mr-2 x h-4 w-4 " />
             Login with GitHub
           </Button>
         </CardFooter>
