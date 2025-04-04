@@ -13,6 +13,23 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Pulse scale animation */
+@keyframes pulse-scale {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse-scale {
+  animation: pulse-scale 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transition: color 0.3s ease;
+}
+
 /* Button hover animations */
 .button-hover {
   position: relative;

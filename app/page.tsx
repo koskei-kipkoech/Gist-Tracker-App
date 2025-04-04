@@ -1,23 +1,65 @@
+"use client"
+
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { GithubIcon } from "lucide-react"
+import { GithubIcon, Loader2 } from "lucide-react"
 
 export default function Home() {
+  const router = useRouter()
+  const [isLoginLoading, setIsLoginLoading] = useState(false)
+  const [isSignUpLoading, setIsSignUpLoading] = useState(false)
+
+  const handleLogin = () => {
+    setIsLoginLoading(true)
+    router.push("/login")
+  }
+
+  const handleSignUp = () => {
+    setIsSignUpLoading(true)
+    router.push("/signup")
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between px-4">
-          <div className="cursor-pointer flex items-center ml-5 gap-2 font-bold">
-            <GithubIcon className="h-5 w-5 " />
+          <div className="cursor-pointer text-amber-800 flex items-center ml-5 gap-2 font-extrabold animate-pulse-scale hover:text-primary transition-colors duration-300">
+            <GithubIcon className="h-5 w-5" />
             <span>Gist Tracker</span>
           </div>
-          <div className=" flex items-center gap-2">
-            <Link href="/login">
-              <Button variant="outline" className="cursor-pointer bg-gray-500 transition-colors hover:bg-primary hover:text-primary-foreground">Login</Button>
-            </Link>
-            <Link href="/signup">
-              <Button variant="outline" className="cursor-pointer bg-gray-500 transition-colors hover:bg-primary/90 hover:text-foreground">Sign Up</Button>
-            </Link>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="cursor-pointer bg-gray-500 hover:bg-primary hover:text-primary-foreground transform hover:scale-105 hover:shadow-md transition-all duration-200"
+              onClick={handleLogin}
+              disabled={isLoginLoading}
+            >
+              {isLoginLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "Login"
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              className="cursor-pointer bg-gray-500 hover:bg-primary/90 hover:text-foreground transform hover:scale-105 hover:shadow-md transition-all duration-200"
+              onClick={handleSignUp}
+              disabled={isSignUpLoading}
+            >
+              {isSignUpLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "Sign Up"
+              )}
+            </Button>
           </div>
         </div>
       </header>
@@ -92,4 +134,6 @@ export default function Home() {
     </div>
   )
 }
+
+
 

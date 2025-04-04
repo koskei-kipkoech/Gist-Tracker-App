@@ -31,3 +31,4 @@ export default function RootLayout({
 
 
 import './globals.css'
+import '../styles/logo-animation.css'
