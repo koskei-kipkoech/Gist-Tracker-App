@@ -22,6 +22,8 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
+  // Add this new state near the top with other state declarations
+  const [isGithubLoading, setIsGithubLoading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
@@ -78,6 +80,14 @@ export default function LoginPage() {
   const handleBackClick = () => {
     setIsNavigating(true)
     router.push('/')
+  }
+
+  // Add this new function before the return statement
+  const handleGithubLogin = () => {
+    if (window.confirm("You are about to be redirected to GitHub's website for login. Do you want to continue?")) {
+      setIsGithubLoading(true)
+      window.location.href = "https://gist.github.com/"
+    }
   }
 
   return (
@@ -162,9 +172,21 @@ export default function LoginPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button  variant="outline" className="cursor-pointer transform bg-amber-950 hover:scale-105 hover:shadow-md  duration-200 w-full" disabled={isLoading}>
-            <GithubIcon className="mr-2 x h-4 w-4 " />
-            <Link href="https://gist.github.com/">Login with GitHub</Link>
+          <Button 
+            variant="outline" 
+            className="cursor-pointer transform bg-amber-950 hover:scale-105 hover:shadow-md duration-200 w-full" 
+            disabled={isGithubLoading}
+            onClick={handleGithubLogin}
+          >
+            <GithubIcon className="mr-2 h-4 w-4" />
+            {isGithubLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Redirecting to GitHub...
+              </>
+            ) : (
+              "Login with GitHub"
+            )}
           </Button>
         </CardFooter>
       </Card>

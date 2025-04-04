@@ -74,6 +74,17 @@ export default function SignupPage() {
     router.push('/')
   }
 
+  // Add this new state near the top with other state declarations
+  const [isGithubLoading, setIsGithubLoading] = useState(false)
+
+  // Add this new function before the return statement
+  const handleGithubSignup = () => {
+    if (window.confirm("You are about to be redirected to GitHub's website for signup. Do you want to continue?")) {
+      setIsGithubLoading(true)
+      window.location.href = "https://gist.github.com/"
+    }
+  }
+
   return (
     <div className="container flex h-screen p-8 w-screen flex-col items-center justify-center">
       <div onClick={handleBackClick}>
@@ -173,9 +184,21 @@ export default function SignupPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant="outline" className="cursor-pointer bg-amber-950 transform hover:scale-105 hover:shadow-md  duration-200 w-full" disabled={isLoading}>
-            <GithubIcon className=" mr-2 h-4 w-4 " />
-            <Link href="https://gist.github.com/">Sign up with GitHub</Link>
+          <Button 
+            variant="outline" 
+            className="cursor-pointer bg-amber-950 transform hover:scale-105 hover:shadow-md duration-200 w-full" 
+            disabled={isGithubLoading}
+            onClick={handleGithubSignup}
+          >
+            <GithubIcon className="mr-2 h-4 w-4" />
+            {isGithubLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Redirecting to GitHub...
+              </>
+            ) : (
+              "Sign up with GitHub"
+            )}
           </Button>
         </CardFooter>
       </Card>
