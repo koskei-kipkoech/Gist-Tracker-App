@@ -25,6 +25,7 @@ type SignupValues = z.infer<typeof signupSchema>
 export default function SignupPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)  // Add this new state
   const [error, setError] = useState<string | null>(null)
 
   const form = useForm<SignupValues>({
@@ -68,14 +69,32 @@ export default function SignupPage() {
     }
   }
 
+  const handleBackClick = () => {
+    setIsNavigating(true)
+    router.push('/')
+  }
+
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      <Link href="/" className="absolute cursor-pointer left-4 top-4 md:left-8 md:top-8 bg-amber-950">
-        <Button variant="outline">← Back</Button>
-      </Link>
-      <Card className="w-full max-w-md">
+    <div className="container flex h-screen p-8 w-screen flex-col items-center justify-center">
+      <div onClick={handleBackClick}>
+        <Button 
+          className="absolute cursor-pointer transform hover:scale-105 hover:shadow-md duration-200 bg-blue-500 left-6 top-5 md:left-8 md:top-8 hover:bg-blue-600" 
+          variant="ghost"
+          disabled={isNavigating}
+        >
+          {isNavigating ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Loading...
+            </>
+          ) : (
+            "← Back"
+          )}
+        </Button>
+      </div>
+      <Card className="w-full  max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Sign up</CardTitle>
+          <CardTitle className="text-2xl cursor-pointer text-amber-800 font-extrabold">Sign Up</CardTitle>
           <CardDescription>Create an account to manage your GitHub gists</CardDescription>
         </CardHeader>
         <CardContent>
@@ -89,7 +108,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Kipkoech" {...field} />
+                      <Input placeholder="Kipkoech" className="mt-2" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -102,7 +121,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="kipkoech@example.com" {...field} />
+                      <Input type="email" className="mt-2" placeholder="kipkoech@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,7 +134,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="***********" {...field} />
+                      <Input type="password" className="mt-2" placeholder="***********" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -128,13 +147,13 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>GitHub Username (Optional)</FormLabel>
                     <FormControl>
-                      <Input placeholder="kipkipp" {...field} />
+                      <Input placeholder="kip_kipp" className="mt-2" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button variant="outline" type="submit" className="cursor-pointer mt-10 w-full bg-amber-950" disabled={isLoading}>
+              <Button variant="outline" type="submit" className="cursor-pointer mt-10 w-full  bg-amber-950 hover:bg-amber-800 transform hover:scale-105 hover:shadow-md  duration-200" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -154,9 +173,9 @@ export default function SignupPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant="outline" className="w-full" disabled={isLoading}>
-            <GithubIcon className="cursor-pointer mr-2 h-4 w-4 bg-amber-950" />
-            Sign up with GitHub
+          <Button variant="outline" className="cursor-pointer bg-amber-950 transform hover:scale-105 hover:shadow-md  duration-200 w-full" disabled={isLoading}>
+            <GithubIcon className=" mr-2 h-4 w-4 " />
+            <Link href="https://gist.github.com/">Sign up with GitHub</Link>
           </Button>
         </CardFooter>
       </Card>
