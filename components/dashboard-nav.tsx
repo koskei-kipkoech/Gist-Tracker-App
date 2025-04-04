@@ -24,7 +24,7 @@ export function DashboardNav() {
   }
 
   return (
-    <div className="flex h-16 items-center px-4 border-b bg-background/95 backdrop-blur">
+    <div className="flex h-16 items-center p-5 border-b bg-background/95 backdrop-blur">
       <div className="cursor-pointer  flex items-center gap-2 font-sans font-extrabold text-amber-800 mr-6">
         <GithubIcon className="h-5 w-5" />
         <span>Gist Tracker</span>
