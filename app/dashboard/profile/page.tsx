@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Loader2 } from "lucide-react"
 import { User, ApiError } from "@/types/user"
+import Link from "next/link"
 
 const profileSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -123,8 +124,16 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="container py-8">
+    <div className="ml-2 mr-2 container py-8">
       <div className="mx-auto max-w-3xl">
+        <Link href="/dashboard" className="mb-6 ml-3 inline-block">
+          <Button
+            variant="outline"
+            className="bg-blue-500 cursor-pointer text-white hover:bg-blue-600 hover:scale-105 transition-all duration-200"
+          >
+            ← Back to Dashboard
+          </Button>
+        </Link>
         <h1 className="mb-6 text-3xl font-bold tracking-tight">Your Profile</h1>
 
         {error && <div className="mb-4 rounded-md bg-destructive/15 p-3 text-sm text-destructive">{error}</div>}
