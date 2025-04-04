@@ -4,11 +4,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { GithubIcon, HomeIcon, PlusIcon, UserIcon, LogOutIcon } from "lucide-react"
+import { GithubIcon, HomeIcon, PlusIcon, UserIcon, LogOutIcon, MenuIcon } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function DashboardNav() {
   const pathname = usePathname()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
@@ -24,12 +26,54 @@ export function DashboardNav() {
   }
 
   return (
-    <div className="flex h-16 items-center p-5 border-b bg-background/95 backdrop-blur">
-      <div className="cursor-pointer  flex items-center gap-2 font-sans font-extrabold text-amber-800 mr-6">
+    <div className="fixed top-0 left-0 right-0  z-50 flex h-16 items-center p-3 sm:p-5 border-b bg-background/95 backdrop-blur">
+      <div className="cursor-pointer flex items-center gap-2 font-sans font-extrabold text-amber-800 mr-2 sm:mr-6">
         <GithubIcon className="h-5 w-5" />
-        <span>Gist Tracker</span>
+        <span className="hidden sm:inline">Gist Tracker</span>
       </div>
-      <nav className="flex items-center space-x-4 lg:space-x-6 mx-6">
+      
+      {/* Mobile Menu */}
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild className="lg:hidden">
+          <Button variant="ghost" size="icon" className="mr-2">
+            <MenuIcon className="h-5 w-5" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-[240px] sm:w-[280px]">
+          <nav className="flex flex-col space-y-4 mt-6">
+            <Link href="/dashboard" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="ghost"
+                className={`w-full justify-start ${pathname === "/dashboard" ? "bg-amber-700 hover:bg-amber-900" : ""}`}
+              >
+                <HomeIcon className="h-4 w-4 mr-2" />
+                Dashboard
+              </Button>
+            </Link>
+            <Link href="/dashboard/gists/new" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="ghost"
+                className={`w-full justify-start ${pathname === "/dashboard/gists/new" ? "bg-amber-700 hover:bg-amber-900" : ""}`}
+              >
+                <PlusIcon className="h-4 w-4 mr-2" />
+                New Gist
+              </Button>
+            </Link>
+            <Link href="/dashboard/profile" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="ghost"
+                className={`w-full justify-start ${pathname === "/dashboard/profile" ? "bg-amber-700 hover:bg-amber-900" : ""}`}
+              >
+                <UserIcon className="h-4 w-4 mr-2" />
+                Profile
+              </Button>
+            </Link>
+          </nav>
+        </SheetContent>
+      </Sheet>
+
+      {/* Desktop Navigation */}
+      <nav className="hidden lg:flex items-center space-x-4 lg:space-x-6 mx-6">
         <Link
           href="/dashboard"
           className={`cursor-pointer text-sm font-medium transition-colors hover:text-primary ${
@@ -64,17 +108,16 @@ export function DashboardNav() {
           </Button>
         </Link>
       </nav>
-      <div className="ml-auto flex items-center gap-4">
-        
+      <div className="ml-auto flex items-center gap-2 sm:gap-4">
         <Button 
           variant="outline" 
-          className="cursor-pointer mr-5 bg-gray-500 hover:bg-gray-600 transform hover:scale-105 hover:shadow-md transition-all duration-200" 
+          className="cursor-pointer bg-gray-500 hover:bg-gray-600 transform hover:scale-105 hover:shadow-md transition-all duration-200" 
           size="sm" 
           onClick={handleLogout}
           disabled={isLoggingOut}
         >
-          <LogOutIcon className="h-4 w-4 mr-2" />
-          {isLoggingOut ? "Logging out..." : "Logout"}
+          <LogOutIcon className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline">{isLoggingOut ? "Logging out..." : "Logout"}</span>
         </Button>
       </div>
     </div>
