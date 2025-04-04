@@ -24,10 +24,10 @@ export default async function DashboardPage() {
   const gists = await getGists(user._id)
 
   return (
-    <div className="container p-4 sm:p-8">
+    <div className="container mt-15 p-4 sm:p-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 space-y-4 sm:space-y-0">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Your Gists</h1>
+          <h1 className="text-2xl sm:text-3xl  font-extrabold mb-3 text-amber-800 tracking-tight">Your Gists</h1>
           <p className="text-sm sm:text-base text-muted-foreground">Manage and organize your code snippets</p>
         </div>
         <Link href="/dashboard/gists/new" className="w-full sm:w-auto">
