@@ -87,15 +87,15 @@ export default function NewGistPage() {
   }
 
   return (
-    <div className="container py-8">
+    <div className="container mt-15 p-8">
       <div className="mx-auto max-w-3xl">
-        <h1 className="mb-6 text-3xl font-bold tracking-tight">Create New Gist</h1>
+        <h1 className="mb-6 text-3xl font-extrabold text-amber-800 tracking-tight">Create New Gist</h1>
 
-        {error && <div className="mb-4 rounded-md bg-destructive/15 p-3 text-sm text-destructive">{error}</div>}
+        {error && <div className="mb-4 rounded-md cursor-pointer bg-destructive/15 p-3 text-sm text-destructive">{error}</div>}
 
         <Card>
           <CardHeader>
-            <CardTitle>Gist Details</CardTitle>
+            <CardTitle className="text-amber-800 cursor-pointer mb-2"> Gist Details</CardTitle>
             <CardDescription>Create a new code snippet to save and share</CardDescription>
           </CardHeader>
           <CardContent>
@@ -108,7 +108,7 @@ export default function NewGistPage() {
                     <FormItem>
                       <FormLabel>Title</FormLabel>
                       <FormControl>
-                        <Input placeholder="My awesome code snippet" {...field} />
+                        <Input className="mt-2" placeholder="My awesome code snippet" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -124,7 +124,7 @@ export default function NewGistPage() {
                       <FormControl>
                         <Textarea
                           placeholder="A brief description of what this code does"
-                          className="min-h-20"
+                          className="min-h-20 mt-2"
                           {...field}
                         />
                       </FormControl>
@@ -141,7 +141,7 @@ export default function NewGistPage() {
                       <FormLabel>Language</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger className="bg-background/50 backdrop-blur-sm border-muted">
+                          <SelectTrigger className="mt-2 bg-background/50 backdrop-blur-sm border-muted">
                             <SelectValue placeholder="Select a language" />
                           </SelectTrigger>
                         </FormControl>
@@ -150,7 +150,7 @@ export default function NewGistPage() {
                             <SelectItem
                               key={option.value}
                               value={option.value}
-                              className="cursor-pointer transition-colors hover:bg-muted/50 focus:bg-muted/50 py-2.5"
+                              className="mt-2 cursor-pointer transition-colors hover:bg-muted/50 focus:bg-muted/50 py-2.5"
                             >
                               {option.label}
                             </SelectItem>
@@ -171,7 +171,7 @@ export default function NewGistPage() {
                       <FormControl>
                         <Textarea 
                           placeholder="Paste your code here" 
-                          className="min-h-[200px] font-mono bg-muted/50 p-4 rounded-md border-2 border-muted hover:border-muted-foreground/50 focus:border-primary transition-colors duration-200 resize-y leading-relaxed tracking-wide selection:bg-primary/20"
+                          className="mt-2 min-h-[200px] font-mono bg-muted/50 p-4 rounded-md border-2 border-muted hover:border-muted-foreground/50 focus:border-primary transition-colors duration-200 resize-y leading-relaxed tracking-wide selection:bg-primary/20"
                           spellCheck="false"
                           {...field} 
                         />
@@ -187,7 +187,7 @@ export default function NewGistPage() {
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                       <div className="space-y-0.5">
-                        <FormLabel className="text-base">Public Gist</FormLabel>
+                        <FormLabel className="mb-3 text-base">Public Gist</FormLabel>
                         <FormDescription>Make this gist visible to everyone</FormDescription>
                       </div>
                       <FormControl>

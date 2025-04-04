@@ -10,7 +10,13 @@ import { PlusIcon, CodeIcon, ClockIcon } from "lucide-react"
 
 async function getGists(userId: string) {
   await connectDB()
-  return await Gist.find({ user: userId }).sort({ createdAt: -1 })
+  // Fetch both user's gists and public gists from other users
+  return await Gist.find({
+    $or: [
+      { user: userId },
+      { isPublic: true }
+    ]
+  }).sort({ createdAt: -1 })
 }
 
 export default async function DashboardPage() {
@@ -18,15 +24,15 @@ export default async function DashboardPage() {
   const gists = await getGists(user._id)
 
   return (
-    <div className="container p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div >
-          <h1 className="ml-4 text-3xl font-bold tracking-tight">Your Gists</h1>
-          <p className="ml-4 ext-muted-foreground">Manage and organize your code snippets</p>
+    <div className="container mt-15 p-4 sm:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 space-y-4 sm:space-y-0">
+        <div>
+          <h1 className="text-2xl sm:text-3xl  font-extrabold mb-3 text-amber-800 tracking-tight">Your Gists</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Manage and organize your code snippets</p>
         </div>
-        <Link href="/dashboard/gists/new">
-          <Button className="cursor-pointer bg-amber-700 hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200">
-            <PlusIcon className=" mr-3 h-4 w-4"/>
+        <Link href="/dashboard/gists/new" className="w-full sm:w-auto">
+          <Button className="w-full sm:w-auto cursor-pointer bg-amber-700 hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200">
+            <PlusIcon className="mr-3 h-4 w-4"/>
             New Gist
           </Button>
         </Link>
@@ -49,17 +55,17 @@ export default async function DashboardPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {gists.map((gist) => (
-            <Card key={gist._id}>
+            <Card key={gist._id} className="flex flex-col">
               <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg text-amber-800 cursor-e-resize font-bold">{gist.title}</CardTitle>
-                  <Badge className="cursor-pointer bg-teal-600" variant={gist.isPublic ? "default" : "secondary"}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <CardTitle className="text-base sm:text-lg text-amber-800 font-bold break-words">{gist.title}</CardTitle>
+                  <Badge className="self-start sm:self-center cursor-pointer bg-teal-600" variant={gist.isPublic ? "default" : "secondary"}>
                     {gist.isPublic ? "Public" : "Private"}
                   </Badge>
                 </div>
-                <CardDescription className="line-clamp-2 h-10">
+                <CardDescription className="line-clamp-2 text-sm mt-2">
                   {gist.description || "No description provided"}
                 </CardDescription>
               </CardHeader>
@@ -81,12 +87,21 @@ export default async function DashboardPage() {
                   {new Date(gist.createdAt).toLocaleDateString()}
                 </div>
               </CardFooter>
-              <CardFooter className="pt-1">
-                <Link href={`/dashboard/gists/${gist._id}`} className="w-full">
-                  <Button variant="outline" className="cursor-pointer bg-amber-700 w-full hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200 ">
-                    View Gist
-                  </Button>
-                </Link>
+              <CardFooter className="mt-auto pt-1">
+                <div className="w-full flex flex-col sm:flex-row gap-2">
+                  <Link href={`/dashboard/gists/${gist._id}`} className="flex-1">
+                    <Button variant="outline" className="w-full cursor-pointer bg-amber-700 hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200">
+                      View Gist
+                    </Button>
+                  </Link>
+                  {gist.user === user._id && (
+                    <Link href={`/dashboard/gists/${gist._id}/edit`} className="flex-1">
+                      <Button variant="outline" className="w-full cursor-pointer bg-orange-400 hover:bg-orange-500 transform hover:scale-105 hover:shadow-md transition-all duration-200">
+                        Edit Gist
+                      </Button>
+                    </Link>
+                  )}
+                </div>
               </CardFooter>
             </Card>
           ))}

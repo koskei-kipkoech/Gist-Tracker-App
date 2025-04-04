@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Loader2 } from "lucide-react"
 import { User, ApiError } from "@/types/user"
 import Link from "next/link"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const profileSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -24,11 +25,13 @@ const profileSchema = z.object({
 type ProfileValues = z.infer<typeof profileSchema>
 
 export default function ProfilePage() {
+  const isMobile = useIsMobile()
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [isNavigating, setIsNavigating] = useState(false)
 
   const form = useForm<ProfileValues>({
     resolver: zodResolver(profileSchema),
@@ -124,17 +127,25 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="ml-2 mr-2 container py-8">
-      <div className="mx-auto max-w-3xl">
-        <Link href="/dashboard" className="mb-6 ml-3 inline-block">
+    <div className={`container ${isMobile ? 'p-4 mt-20' : 'p-8 mt-20'}`}>
+      <div className={`mx-auto ${isMobile ? 'max-w-full' : 'max-w-3xl'}`}>
+        <Link href="/dashboard" className={`${isMobile ? 'mb-4 ml-2' : 'mb-6 ml-3'} inline-block`} onClick={() => setIsNavigating(true)}>  
           <Button
             variant="outline"
-            className="bg-blue-500 cursor-pointer text-white hover:bg-blue-600 hover:scale-105 transition-all duration-200"
+            className={`bg-blue-500 cursor-pointer text-white hover:bg-blue-600 hover:scale-105 transition-all duration-200 ${isMobile ? 'text-sm py-2' : ''}`}
+            disabled={isNavigating}
           >
-            ← Back to Dashboard
+            {isNavigating ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              "← Back to Dashboard"
+            )}
           </Button>
         </Link>
-        <h1 className="mb-6 text-3xl font-bold tracking-tight">Your Profile</h1>
+        <h1 className={`${isMobile ? 'mb-4 text-2xl' : 'mb-6 text-3xl'} font-bold tracking-tight`}>Your Profile</h1>
 
         {error && <div className="mb-4 rounded-md bg-destructive/15 p-3 text-sm text-destructive">{error}</div>}
 
@@ -148,29 +159,29 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-4">
-                <Avatar className="h-16 w-16 ring-2 ring-primary/20 transition-all duration-300 hover:scale-105 hover:ring-4 hover:ring-primary/40 hover:shadow-lg hover:shadow-primary/20 cursor-pointer bg-teal-500">
-                  <AvatarImage src={`https://github.com/${user?.githubUsername || "ghost"}.png`} alt={user?.name} className="object-cover  transition-opacity duration-300 hover:opacity-90" />
+                <Avatar className={`${isMobile ? 'h-12 w-12' : 'h-16 w-16'} ring-2 ring-primary/20 transition-all duration-300 hover:scale-105 hover:ring-4 hover:ring-primary/40 hover:shadow-lg hover:shadow-primary/20 cursor-pointer bg-teal-500`}>
+                  <AvatarImage src={`https://github.com/${user?.githubUsername || "ghost"}.png`} alt={user?.name} className="object-cover transition-opacity duration-300 hover:opacity-90" />
                   <AvatarFallback className="bg-primary/5 text-lg font-extrabold text-black text-shadow-cyan-600 transition-colors duration-300 hover:bg-primary/10">{user?.name?.charAt(0) || "U"}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <CardTitle className="mb-2 cursor-pointer">{user?.name}</CardTitle>
+                  <CardTitle className={`${isMobile ? 'text-lg' : 'text-xl'} mb-2 cursor-pointer`}>{user?.name}</CardTitle>
                   <CardDescription className="cursor-pointer">{user?.email}</CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className={`space-y-${isMobile ? '4' : '6'}`}>
                   <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel className={isMobile ? 'text-sm' : ''}>Name</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input className={`mt-2 ${isMobile ? 'text-sm' : ''}`} {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className={isMobile ? 'text-xs' : 'text-sm'} />
                       </FormItem>
                     )}
                   />
@@ -180,11 +191,11 @@ export default function ProfilePage() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel className={isMobile ? 'text-sm' : ''}>Email</FormLabel>
                         <FormControl>
-                          <Input type="email" disabled {...field} />
+                          <Input type="email" className={`mt-2 ${isMobile ? 'text-sm' : ''}`} disabled {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className={isMobile ? 'text-xs' : 'text-sm'} />
                       </FormItem>
                     )}
                   />
@@ -194,11 +205,11 @@ export default function ProfilePage() {
                     name="githubUsername"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>GitHub Username</FormLabel>
+                        <FormLabel className={isMobile ? 'text-sm' : ''}>GitHub Username</FormLabel>
                         <FormControl>
-                          <Input placeholder="johndoe" {...field} value={field.value || ""} />
+                          <Input placeholder="johndoe" className={`mt-2 ${isMobile ? 'text-sm' : ''}`} {...field} value={field.value || ""} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className={isMobile ? 'text-xs' : 'text-sm'} />
                       </FormItem>
                     )}
                   />
@@ -208,22 +219,27 @@ export default function ProfilePage() {
                     name="bio"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Bio</FormLabel>
+                        <FormLabel className={isMobile ? 'text-sm' : ''}>Bio</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Tell us a little about yourself"
-                            className="min-h-[100px]"
+                            className={`mt-2 ${isMobile ? 'min-h-[80px] text-sm' : 'min-h-[100px]'}`}
                             {...field}
                             value={field.value || ""}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className={isMobile ? 'text-xs' : 'text-sm'} />
                       </FormItem>
                     )}
                   />
 
-                  <div className="flex justify-end gap-2">
-                    <Button type="submit" variant="outline" className="cursor-pointer bg-gray-400 hover:bg-gray-600 hover:text-white hover:scale-105 transition-all duration-200" disabled={isSaving}>
+                  <div className={`flex justify-end ${isMobile ? 'gap-2 flex-col' : 'gap-2'}`}>
+                    <Button 
+                      type="submit" 
+                      variant="outline" 
+                      className={`cursor-pointer bg-gray-400 hover:bg-gray-600 hover:text-white hover:scale-105 transition-all duration-200 ${isMobile ? 'w-full text-sm py-2' : ''}`} 
+                      disabled={isSaving}
+                    >
                       {isSaving ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -235,7 +251,7 @@ export default function ProfilePage() {
                     </Button>
                     <Button 
                       variant="outline" 
-                      className="cursor-pointer bg-red-400 hover:bg-red-600 hover:text-white hover:scale-105 transition-all duration-200"
+                      className={`cursor-pointer bg-red-400 hover:bg-red-600 hover:text-white hover:scale-105 transition-all duration-200 ${isMobile ? 'w-full text-sm py-2' : ''}`}
                       onClick={async () => {
                         if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
                           try {
