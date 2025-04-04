@@ -25,8 +25,8 @@ export default async function DashboardPage() {
           <p className="ml-4 ext-muted-foreground">Manage and organize your code snippets</p>
         </div>
         <Link href="/dashboard/gists/new">
-          <Button className="cursor-pointer bg-amber-900">
-            <PlusIcon className=" mr-3 h-4 w-4" />
+          <Button className="cursor-pointer bg-amber-700 hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200">
+            <PlusIcon className=" mr-3 h-4 w-4"/>
             New Gist
           </Button>
         </Link>
@@ -54,8 +54,8 @@ export default async function DashboardPage() {
             <Card key={gist._id}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-medium">{gist.title}</CardTitle>
-                  <Badge variant={gist.isPublic ? "default" : "secondary"}>
+                  <CardTitle className="text-lg cursor-e-resize font-bold">{gist.title}</CardTitle>
+                  <Badge className="cursor-pointer bg-teal-600" variant={gist.isPublic ? "default" : "secondary"}>
                     {gist.isPublic ? "Public" : "Private"}
                   </Badge>
                 </div>
@@ -64,7 +64,7 @@ export default async function DashboardPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pb-2">
-                <div className="rounded-md bg-muted p-2">
+                <div className="rounded-md bg-gray-500 bg-muted p-2">
                   <pre className="text-xs overflow-x-auto">
                     <code className="line-clamp-3">{gist.content}</code>
                   </pre>
@@ -72,18 +72,18 @@ export default async function DashboardPage() {
               </CardContent>
               <CardFooter className="flex items-center justify-between text-xs text-muted-foreground">
                 <div className="flex items-center">
-                  <Badge variant="outline" className="mr-2">
+                  <Badge variant="outline" className="mr-2 cursor-pointer bg-teal-600">
                     {gist.language}
                   </Badge>
                 </div>
                 <div className="flex items-center">
-                  <ClockIcon className="mr-1 h-3 w-3" />
+                  <ClockIcon className=" text-blue-400 mr-1 h-3 w-3" />
                   {new Date(gist.createdAt).toLocaleDateString()}
                 </div>
               </CardFooter>
               <CardFooter className="pt-1">
                 <Link href={`/dashboard/gists/${gist._id}`} className="w-full">
-                  <Button variant="outline" className="cursor-pointer bg-amber-900 w-full">
+                  <Button variant="outline" className="cursor-pointer bg-amber-700 w-full hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200 ">
                     View Gist
                   </Button>
                 </Link>
