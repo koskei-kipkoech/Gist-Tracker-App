@@ -30,7 +30,7 @@ export default async function GistPage({ params }: { params: { id: string } }) {
   const gist = await getGist(id)
 
   return (
-    <div className="container px-4 sm:px-5 py-4 sm:py-5">
+    <div className="container mt-15 px-4 sm:px-5 py-4 sm:py-5">
       <div className="mb-4 sm:mb-6 flex items-center">
         <Link href="/dashboard" >
           <Button variant="outline" className="w-full sm:w-auto cursor-pointer bg-blue-500 hover:bg-blue-600 transform hover:scale-105 hover:shadow-md transition-all duration-200" size="sm">
