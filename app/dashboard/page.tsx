@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   const gists = await getGists(user._id)
 
   return (
-    <div className="container py-8">
+    <div className="container p-8">
       <div className="flex items-center justify-between mb-8">
         <div >
           <h1 className="ml-4 text-3xl font-bold tracking-tight">Your Gists</h1>
@@ -54,7 +54,7 @@ export default async function DashboardPage() {
             <Card key={gist._id}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg cursor-e-resize font-bold">{gist.title}</CardTitle>
+                  <CardTitle className="text-lg text-amber-800 cursor-e-resize font-bold">{gist.title}</CardTitle>
                   <Badge className="cursor-pointer bg-teal-600" variant={gist.isPublic ? "default" : "secondary"}>
                     {gist.isPublic ? "Public" : "Private"}
                   </Badge>

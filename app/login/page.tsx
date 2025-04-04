@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { GithubIcon, Loader2 } from "lucide-react"
 import { AuthError } from "@/lib/errors"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -22,6 +23,9 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
+  const isMobile = useIsMobile()
+  // Add this new state near the top with other state declarations
+  const [isGithubLoading, setIsGithubLoading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
@@ -80,11 +84,20 @@ export default function LoginPage() {
     router.push('/')
   }
 
+  // Add this new function before the return statement
+  const handleGithubLogin = () => {
+    if (window.confirm("You are about to be redirected to GitHub's website for login. Do you want to continue?")) {
+      setIsGithubLoading(true)
+      window.location.href = "https://gist.github.com/"
+    }
+  }
+
   return (
-    <div className="container flex h-screen w-screen p-8 flex-col items-center justify-center">
+    <div className={`container flex h-screen w-screen ${isMobile ? 'p-4' : 'p-8'} flex-col items-center justify-center`}>
       <div onClick={handleBackClick}>
         <Button 
-          className="absolute cursor-pointer transform hover:scale-105 hover:shadow-md duration-200 bg-blue-500 left-6 top-5 md:left-8 md:top-8 hover:bg-blue-600" 
+          className={`absolute cursor-pointer transform hover:scale-105 hover:shadow-md duration-200 bg-blue-500 
+            ${isMobile ? 'left-2 top-2' : 'left-6 top-5 md:left-8 md:top-8'} hover:bg-blue-600`}
           variant="ghost"
           disabled={isNavigating}
         >
@@ -98,10 +111,14 @@ export default function LoginPage() {
           )}
         </Button>
       </div>
-      <Card className="w-full max-w-md">
+      <Card className={`w-full ${isMobile ? 'max-w-[95%]' : 'max-w-md'}`}>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-amber-800 cursor-pointer font-extrabold">Login</CardTitle>
-          <CardDescription>Enter your credentials to access your account</CardDescription>
+          <CardTitle className={`${isMobile ? 'text-xl' : 'text-2xl'} text-amber-800 cursor-pointer font-extrabold`}>
+            Login
+          </CardTitle>
+          <CardDescription className={isMobile ? 'text-sm' : ''}>
+            Enter your credentials to access your account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {success && (
@@ -115,7 +132,7 @@ export default function LoginPage() {
             </Alert>
           )}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className={`space-y-${isMobile ? '3' : '4'}`}>
               <FormField
                 control={form.control}
                 name="email"
@@ -154,7 +171,7 @@ export default function LoginPage() {
               </Button>
             </form>
           </Form>
-          <div className="mt-4 text-center text-sm">
+          <div className={`${isMobile ? 'mt-3' : 'mt-4'} text-center text-sm`}>
             Don&apos;t have an account?{" "}
             <Link href="/signup" className="underline">
               Sign up
@@ -162,9 +179,21 @@ export default function LoginPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button  variant="outline" className="cursor-pointer transform bg-amber-950 hover:scale-105 hover:shadow-md  duration-200 w-full" disabled={isLoading}>
-            <GithubIcon className="mr-2 x h-4 w-4 " />
-            <Link href="https://gist.github.com/">Login with GitHub</Link>
+          <Button 
+            variant="outline" 
+            className="cursor-pointer transform bg-amber-950 hover:scale-105 hover:shadow-md duration-200 w-full" 
+            disabled={isGithubLoading}
+            onClick={handleGithubLogin}
+          >
+            <GithubIcon className="mr-2 h-4 w-4" />
+            {isGithubLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Redirecting to GitHub...
+              </>
+            ) : (
+              "Login with GitHub"
+            )}
           </Button>
         </CardFooter>
       </Card>

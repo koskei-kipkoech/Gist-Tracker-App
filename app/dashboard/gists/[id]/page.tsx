@@ -45,7 +45,7 @@ export default async function GistPage({ params }: { params: { id: string } }) {
           <CardHeader>
             <div className="m-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <CardTitle className="text-2xl text-bold cursor-pointer">{gist.title}</CardTitle>
+                <CardTitle className="text-2xl text-bold text-amber-800 cursor-pointer">{gist.title}</CardTitle>
                 <CardDescription className="mt-2 cursor-e-resize">{gist.description || "No description provided"}</CardDescription>
               </div>
               <div className="flex flex-wrap gap-2">

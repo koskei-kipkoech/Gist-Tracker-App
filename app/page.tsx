@@ -21,6 +21,15 @@ export default function Home() {
     router.push("/signup")
   }
 
+  // Add this new state with existing states
+  const [isGetStartedLoading, setIsGetStartedLoading] = useState(false)
+  
+  // Add this new handler function
+  const handleGetStarted = () => {
+    setIsGetStartedLoading(true)
+    router.push('/signup')
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
@@ -76,16 +85,25 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link href="/signup">
-                  <Button size="lg" variant="outline" className=" mt-10 cursor-pointer bg-amber-900  hover:bg-amber-600 transform hover:scale-105 hover:shadow-md transition-all duration-200 w-full flex items-center justify-center gap-2">
-                    Get Started  <ArrowRight className="h-4 w-4" />
+                <div onClick={handleGetStarted}>
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="mt-10 cursor-pointer bg-amber-900 hover:bg-amber-600 transform hover:scale-105 hover:shadow-md transition-all duration-200 w-full flex items-center justify-center gap-2"
+                    disabled={isGetStartedLoading}
+                  >
+                    {isGetStartedLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Loading...
+                      </>
+                    ) : (
+                      <>
+                        Get Started <ArrowRight className="h-4 w-4" />
+                      </>
+                    )}
                   </Button>
-                </Link>
-                {/* <Link href="/login">
-                  <Button size="lg" variant="outline" className="w-full">
-                  Get Started
-                  </Button>
-                </Link> */}
+                </div>
               </div>
             </div>
           </div>
