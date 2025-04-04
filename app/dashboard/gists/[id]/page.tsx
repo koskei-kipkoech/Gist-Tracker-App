@@ -45,8 +45,8 @@ export default async function GistPage({ params }: { params: { id: string } }) {
           <CardHeader>
             <div className="m-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <CardTitle className="text-2xl">{gist.title}</CardTitle>
-                <CardDescription className="mt-2">{gist.description || "No description provided"}</CardDescription>
+                <CardTitle className="text-2xl text-bold cursor-pointer">{gist.title}</CardTitle>
+                <CardDescription className="mt-2 cursor-e-resize">{gist.description || "No description provided"}</CardDescription>
               </div>
               <div className="flex flex-wrap gap-2">
                 <Badge variant={gist.isPublic ? "default" : "secondary"} className="cursor-pointer bg-teal-500 hover:bg-amber-900 hover:scale-105 transition-all duration-200">{gist.isPublic ? "Public" : "Private"}</Badge>
@@ -62,12 +62,12 @@ export default async function GistPage({ params }: { params: { id: string } }) {
             </div>
             <div className="mt-4 text-sm text-muted-foreground">
               <div className="flex items-center">
-                <Clock className="mr-1 h-4 w-4" />
+                <Clock className="text-blue-500 mr-1 h-4 w-4" />
                 Created: {new Date(gist.createdAt).toLocaleString()}
               </div>
               {gist.updatedAt > gist.createdAt && (
-                <div className="flex items-center mt-1">
-                  <Clock className="mr-1 h-4 w-4" />
+                <div className=" flex items-center mt-1">
+                  <Clock className="text-blue-500 mr-1 h-4 w-4" />
                   Updated: {new Date(gist.updatedAt).toLocaleString()}
                 </div>
               )}
