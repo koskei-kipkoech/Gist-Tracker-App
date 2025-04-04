@@ -25,6 +25,7 @@ export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)  // Add this new state
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
 
@@ -74,11 +75,29 @@ export default function LoginPage() {
     }
   }
 
+  const handleBackClick = () => {
+    setIsNavigating(true)
+    router.push('/')
+  }
+
   return (
     <div className="container flex h-screen w-screen p-8 flex-col items-center justify-center">
-      <Link href="/" >
-        <Button className="absolute cursor-pointer transform hover:scale-105 hover:shadow-md  duration-200 bg-blue-500  left-6 top-5 md:left-8 md:top-8  hover:bg-blue-600" variant="ghost">←  Back</Button>
-      </Link>
+      <div onClick={handleBackClick}>
+        <Button 
+          className="absolute cursor-pointer transform hover:scale-105 hover:shadow-md duration-200 bg-blue-500 left-6 top-5 md:left-8 md:top-8 hover:bg-blue-600" 
+          variant="ghost"
+          disabled={isNavigating}
+        >
+          {isNavigating ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Loading...
+            </>
+          ) : (
+            "← Back"
+          )}
+        </Button>
+      </div>
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-amber-800 cursor-pointer font-extrabold">Login</CardTitle>
@@ -143,9 +162,9 @@ export default function LoginPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant="outline" className="cursor-pointer transform bg-amber-950 hover:scale-105 hover:shadow-md  duration-200 w-full" disabled={isLoading}>
+          <Button  variant="outline" className="cursor-pointer transform bg-amber-950 hover:scale-105 hover:shadow-md  duration-200 w-full" disabled={isLoading}>
             <GithubIcon className="mr-2 x h-4 w-4 " />
-            Login with GitHub
+            <Link href="https://gist.github.com/">Login with GitHub</Link>
           </Button>
         </CardFooter>
       </Card>

@@ -25,6 +25,7 @@ type SignupValues = z.infer<typeof signupSchema>
 export default function SignupPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)  // Add this new state
   const [error, setError] = useState<string | null>(null)
 
   const form = useForm<SignupValues>({
@@ -68,11 +69,29 @@ export default function SignupPage() {
     }
   }
 
+  const handleBackClick = () => {
+    setIsNavigating(true)
+    router.push('/')
+  }
+
   return (
     <div className="container flex h-screen p-8 w-screen flex-col items-center justify-center">
-      <Link href="/" >
-        <Button className="absolute cursor-pointer transform hover:scale-105 hover:shadow-md  duration-200 bg-blue-500  left-6 top-5 md:left-8 md:top-8  hover:bg-blue-600" variant="ghost">←  Back</Button>
-      </Link>
+      <div onClick={handleBackClick}>
+        <Button 
+          className="absolute cursor-pointer transform hover:scale-105 hover:shadow-md duration-200 bg-blue-500 left-6 top-5 md:left-8 md:top-8 hover:bg-blue-600" 
+          variant="ghost"
+          disabled={isNavigating}
+        >
+          {isNavigating ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Loading...
+            </>
+          ) : (
+            "← Back"
+          )}
+        </Button>
+      </div>
       <Card className="w-full  max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl cursor-pointer text-amber-800 font-extrabold">Sign Up</CardTitle>
@@ -156,7 +175,7 @@ export default function SignupPage() {
         <CardFooter>
           <Button variant="outline" className="cursor-pointer bg-amber-950 transform hover:scale-105 hover:shadow-md  duration-200 w-full" disabled={isLoading}>
             <GithubIcon className=" mr-2 h-4 w-4 " />
-            Sign up with GitHub
+            <Link href="https://gist.github.com/">Sign up with GitHub</Link>
           </Button>
         </CardFooter>
       </Card>
