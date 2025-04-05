@@ -58,6 +58,7 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const form = useForm<GistValues>({
@@ -136,24 +137,39 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="container py-8">
+    <div className="container mt-15 p-8">
       <div className="mb-6 flex items-center">
         <Link href={`/dashboard/gists/${params.id}`}>
-          <Button variant="outline" className="ml-3 cursor-pointer bg-blue-400 hover:bg-blue-500 hover:text-white hover:scale-105 transition-all duration-200" size="sm">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Gist
+          <Button 
+            variant="outline" 
+            className="ml-3 cursor-pointer bg-blue-400 hover:bg-blue-500 hover:text-white hover:scale-105 transition-all duration-200" 
+            size="sm"
+            onClick={() => setIsNavigating(true)}
+            disabled={isNavigating}
+          >
+            {isNavigating ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              <>
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Gist
+              </>
+            )}
           </Button>
         </Link>
       </div>
 
       <div className="mx-auto max-w-3xl">
-        <h1 className="mb-6 text-3xl font-bold tracking-tight">Edit Gist</h1>
+        <h1 className="mb-6 text-3xl font-extrabold text-amber-800 tracking-tight">Edit Gist</h1>
 
         {error && <div className="mb-4 rounded-md bg-destructive/15 p-3 text-sm text-destructive">{error}</div>}
 
         <Card>
           <CardHeader>
-            <CardTitle>Edit Gist Details</CardTitle>
+            <CardTitle className="text-amber-800 mb-2">Edit Gist Details</CardTitle>
             <CardDescription>Update your code snippet</CardDescription>
           </CardHeader>
           <CardContent>
@@ -162,11 +178,12 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                 <FormField
                   control={form.control}
                   name="title"
+                  
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Title</FormLabel>
                       <FormControl>
-                        <Input placeholder="My awesome code snippet" {...field} />
+                        <Input className="mt-2" placeholder="My awesome code snippet" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -180,9 +197,9 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                     <FormItem>
                       <FormLabel>Description (Optional)</FormLabel>
                       <FormControl>
-                        <Textarea
+                        <Textarea 
                           placeholder="A brief description of what this code does"
-                          className="min-h-20"
+                          className="min-h-20 mt-2"
                           {...field}
                           value={field.value || ""}
                         />
@@ -197,11 +214,11 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                   name="language"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Language</FormLabel>
+                      <FormLabel className="mb-2">Language</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger className="w-full bg-background/50 hover:bg-accent/50 transition-colors">
-                            <SelectValue placeholder="Select a language" className="text-muted-foreground" />
+                            <SelectValue placeholder="Select a language" className="text-muted-foreground mt-2" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className="max-h-[300px] overflow-y-auto bg-background/95 backdrop-blur-sm border border-border/50">
@@ -209,7 +226,7 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                             <SelectItem 
                               key={option.value} 
                               value={option.value}
-                              className="hover:bg-accent/80 cursor-pointer transition-colors py-2.5 px-3"
+                              className=" hover:bg-accent/80 cursor-pointer transition-colors py-2.5 px-3"
                             >
                               {option.label}
                             </SelectItem>
@@ -230,7 +247,7 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                       <FormControl>
                         <Textarea 
                           placeholder="Paste your code here" 
-                          className="min-h-[400px] font-mono text-sm leading-relaxed tracking-wide
+                          className="mt-2 min-h-[400px] font-mono text-sm leading-relaxed tracking-wide
                             bg-zinc-950/10 dark:bg-zinc-50/10 backdrop-blur-sm
                             border border-zinc-200 dark:border-zinc-800
                             focus:border-zinc-400 dark:focus:border-zinc-600
@@ -252,7 +269,7 @@ export default function EditGistPage({ params }: { params: { id: string } }) {
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                       <div className="space-y-0.5">
-                        <FormLabel className="text-base">Public Gist</FormLabel>
+                        <FormLabel className="text-base mb-2">Public Gist</FormLabel>
                         <FormDescription>Make this gist visible to everyone</FormDescription>
                       </div>
                       <FormControl>

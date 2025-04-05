@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { PlusIcon, CodeIcon, ClockIcon } from "lucide-react"
+import NewGistButton from "./components/new-gist-button"
+import ViewGistButton from "./components/view-gist-button"
 
 async function getGists(userId: string) {
   await connectDB()
@@ -30,12 +32,9 @@ export default async function DashboardPage() {
           <h1 className="text-2xl sm:text-3xl  font-extrabold mb-3 text-amber-800 tracking-tight">Your Gists</h1>
           <p className="text-sm sm:text-base text-muted-foreground">Manage and organize your code snippets</p>
         </div>
-        <Link href="/dashboard/gists/new" className="w-full sm:w-auto">
-          <Button className="w-full sm:w-auto cursor-pointer bg-amber-700 hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200">
-            <PlusIcon className="mr-3 h-4 w-4"/>
-            New Gist
-          </Button>
-        </Link>
+        <div className="w-full sm:w-auto">
+          <NewGistButton />
+        </div>
       </div>
 
       {gists.length === 0 ? (
@@ -89,11 +88,9 @@ export default async function DashboardPage() {
               </CardFooter>
               <CardFooter className="mt-auto pt-1">
                 <div className="w-full flex flex-col sm:flex-row gap-2">
-                  <Link href={`/dashboard/gists/${gist._id}`} className="flex-1">
-                    <Button variant="outline" className="w-full cursor-pointer bg-amber-700 hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200">
-                      View Gist
-                    </Button>
-                  </Link>
+                  <div className="flex-1">
+                    <ViewGistButton gistId={gist._id.toString()} />
+                  </div>
                   {gist.user === user._id && (
                     <Link href={`/dashboard/gists/${gist._id}/edit`} className="flex-1">
                       <Button variant="outline" className="w-full cursor-pointer bg-orange-400 hover:bg-orange-500 transform hover:scale-105 hover:shadow-md transition-all duration-200">

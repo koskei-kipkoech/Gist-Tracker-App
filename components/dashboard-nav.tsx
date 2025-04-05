@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { GithubIcon, HomeIcon, PlusIcon, UserIcon, LogOutIcon, MenuIcon } from "lucide-react"
+import { GithubIcon, HomeIcon, PlusIcon, UserIcon, LogOutIcon, MenuIcon,StarIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function DashboardNav() {
@@ -59,6 +59,15 @@ export function DashboardNav() {
                 New Gist
               </Button>
             </Link>
+            <Link href="/dashboard/favorites" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="ghost"
+                className={`w-full justify-start ${pathname === "/dashboard/favorites" ? "bg-amber-700 hover:bg-amber-900" : ""}`}
+              >
+                <StarIcon className="h-4 w-4 mr-2" />
+                Favorites
+              </Button>
+            </Link>
             <Link href="/dashboard/profile" onClick={() => setIsOpen(false)}>
               <Button
                 variant="ghost"
@@ -94,6 +103,17 @@ export function DashboardNav() {
           <Button variant="ghost" className={`cursor-pointer h-8 w-8 p-0 lg:h-9 lg:w-fit lg:px-3 ${pathname === "/dashboard/gists/new" ? "bg-amber-700 hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200" : ""}`}>
             <PlusIcon className="h-4 w-4 lg:mr-2" />
             <span className="hidden lg:inline-block">New Gist</span>
+          </Button>
+        </Link>
+        <Link
+          href="/dashboard/favorites"
+          className={`cursor-pointer text-sm font-medium transition-colors hover:text-primary ${
+            pathname === "/dashboard/favorites" ? "text-primary" : "text-muted-foreground"
+          }`}
+        >
+          <Button variant="ghost" className={`cursor-pointer h-8 w-8 p-0 lg:h-9 lg:w-fit lg:px-3 ${pathname === "/dashboard/favorites" ? "bg-amber-700 hover:bg-amber-900 transform hover:scale-105 hover:shadow-md transition-all duration-200" : ""}`}>
+            <StarIcon className="h-4 w-4 lg:mr-2" />
+            <span className="hidden lg:inline-block">Favorites</span>
           </Button>
         </Link>
         <Link

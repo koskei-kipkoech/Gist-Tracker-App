@@ -6,8 +6,11 @@ import Gist from "@/lib/models/gist"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Pencil, Clock, ArrowLeft } from "lucide-react"
+import { Pencil, Clock} from "lucide-react"
 import DeleteGistButton from "./delete-button"
+import FavoriteButton from "@/components/favorite-button"
+import CommentsSection from "@/components/comments-section"
+import BackToDashboardButton from "../../components/back-to-dashboard-button"
 
 async function getGist(id: string) {
   await connectDB()
@@ -32,12 +35,7 @@ export default async function GistPage({ params }: { params: { id: string } }) {
   return (
     <div className="container mt-15 px-4 sm:px-5 py-4 sm:py-5">
       <div className="mb-4 sm:mb-6 flex items-center">
-        <Link href="/dashboard" >
-          <Button variant="outline" className="w-full sm:w-auto cursor-pointer bg-blue-500 hover:bg-blue-600 transform hover:scale-105 hover:shadow-md transition-all duration-200" size="sm">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Dashboard
-          </Button>
-        </Link>
+        <BackToDashboardButton />
       </div>
 
       <div className="grid gap-4 sm:gap-6">
@@ -87,8 +85,10 @@ export default async function GistPage({ params }: { params: { id: string } }) {
                 </div>
               </div>
             )}
+            <FavoriteButton gistId={gist._id.toString()} />
           </CardFooter>
         </Card>
+        <CommentsSection gistId={gist._id.toString()} />
       </div>
     </div>
   )
