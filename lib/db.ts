@@ -21,16 +21,16 @@ async function connectDB() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      serverSelectionTimeoutMS: 30000, // Increased to 30 seconds for better timeout handling
-      socketTimeoutMS: 75000, // Increased to 75 seconds for long-running operations
-      connectTimeoutMS: 30000, // Increased to 30 seconds for initial connection
-      maxPoolSize: 50, // Increased pool size for better concurrent connection handling
-      minPoolSize: 10, // Maintain minimum connections for faster response
+      serverSelectionTimeoutMS: 5000, // Reduced to 5 seconds to handle Vercel's 10s limit
+      socketTimeoutMS: 8000, // Reduced to 8 seconds for operations
+      connectTimeoutMS: 5000, // Reduced to 5 seconds for initial connection
+      maxPoolSize: 10, // Reduced pool size for serverless environment
+      minPoolSize: 0, // Start with no connections for serverless
       retryWrites: true,
       retryReads: true,
-      maxIdleTimeMS: 60000, // Close idle connections after 1 minute
-      heartbeatFrequencyMS: 10000, // Check connection health every 10 seconds
-      autoIndex: true,
+      maxIdleTimeMS: 5000, // Close idle connections after 5 seconds
+      heartbeatFrequencyMS: 2000, // Check connection health more frequently
+      autoIndex: false, // Disable autoIndexing in production
       family: 4 // Use IPv4, since some environments have issues with IPv6
     }
 
