@@ -18,7 +18,7 @@ async function getGists(userId: string) {
       { user: userId },
       { isPublic: true }
     ]
-  }).sort({ createdAt: -1 })
+  }).populate('user', 'name').sort({ createdAt: -1 })
 }
 
 export default async function DashboardPage() {
@@ -76,10 +76,11 @@ export default async function DashboardPage() {
                 </div>
               </CardContent>
               <CardFooter className="flex items-center justify-between text-xs text-muted-foreground">
-                <div className="flex items-center">
-                  <Badge variant="outline" className="mr-2 cursor-pointer bg-teal-600">
+                <div className="flex items-center gap-2">
+                  <Badge variant="outline" className="cursor-pointer bg-teal-600">
                     {gist.language}
                   </Badge>
+                  <span className="text-gray-400 cursor-pointer">By {gist.user.name}</span>
                 </div>
                 <div className="flex items-center">
                   <ClockIcon className=" text-blue-400 mr-1 h-3 w-3" />

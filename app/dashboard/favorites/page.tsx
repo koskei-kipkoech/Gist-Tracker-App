@@ -12,11 +12,15 @@ import LoadingButton from "../components/loading-button"
 async function getFavoriteGists(userId: string) {
   await connectDB()
 
-  // Find all favorites for the user and populate the gist data
+  // Find all favorites for the user and populate the gist data with user information
   const favorites = await Favorite.find({ user: userId })
     .populate({
       path: "gist",
       model: Gist,
+      populate: {
+        path: "user",
+        select: "name"
+      }
     })
     .sort({ createdAt: -1 })
 
@@ -61,9 +65,12 @@ export default async function FavoritesPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg font-medium text-amber-700">{gist.title}</CardTitle>
-                  <Badge variant={gist.isPublic ? "default" : "secondary"} className="bg-teal-500 cursor-pointer">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="bg-blue-400 text-black cursor-pointer">By {gist.user.name}</Badge>
+                    <Badge variant={gist.isPublic ? "default" : "secondary"} className="bg-teal-500 cursor-pointer">
                     {gist.isPublic ? "Public" : "Private"}
                   </Badge>
+                  </div>
                 </div>
                 <CardDescription className="line-clamp-2 h-10">
                   {gist.description || "No description provided"}
