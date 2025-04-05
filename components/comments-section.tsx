@@ -178,7 +178,7 @@ export default function CommentsSection({ gistId }: CommentsSectionProps) {
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <div className="font-medium text-amber-600">{comment.user.name}</div>
-                      <div variant="outline" className="text-blue-500 text-xs text-muted-foreground">{formatDate(comment.createdAt)}</div>
+                      <div  className="text-blue-500 text-xs text-muted-foreground">{formatDate(comment.createdAt)}</div>
                     </div>
                     <div className="mt-2 whitespace-pre-wrap">{comment.content}</div>
                   </div>
