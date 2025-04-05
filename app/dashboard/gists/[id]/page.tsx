@@ -73,7 +73,7 @@ export default async function GistPage({ params }: { params: { id: string } }) {
             </div>
           </CardContent>
           <CardFooter className="px-4 sm:px-6 flex justify-between">
-            {gist.user.toString() === user._id.toString() && (
+            {gist.user._id.toString() === user._id.toString() && (
               <div className="flex gap-2 w-full sm:w-auto">
                 <Link href={`/dashboard/gists/${gist._id}/edit`} className="flex-1 sm:flex-none">
                   <Button variant="outline" className="w-full cursor-pointer bg-orange-400 hover:bg-orange-500 transform hover:scale-105 hover:shadow-md transition-all duration-200" size="sm">
