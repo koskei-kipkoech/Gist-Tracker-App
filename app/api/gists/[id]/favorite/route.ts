@@ -33,8 +33,11 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     await favorite.save()
 
     return NextResponse.json({ message: "Added to favorites" }, { status: 201 })
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message || "Something went wrong" }, { status: 500 })
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 })
+    }
+    return NextResponse.json({ message: "Something went wrong" }, { status: 500 })
   }
 }
 
@@ -59,8 +62,11 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     }
 
     return NextResponse.json({ message: "Removed from favorites" }, { status: 200 })
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message || "Something went wrong" }, { status: 500 })
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 })
+    }
+    return NextResponse.json({ message: "Something went wrong" }, { status: 500 })
   }
 }
 
@@ -81,8 +87,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     })
 
     return NextResponse.json({ isFavorite: !!favorite }, { status: 200 })
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message || "Something went wrong" }, { status: 500 })
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 })
+    }
+    return NextResponse.json({ message: "Something went wrong" }, { status: 500 })
   }
 }
 
