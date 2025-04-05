@@ -1,12 +1,13 @@
-import Link from "next/link"
+// import Link from "next/link"
 import { getCurrentUser } from "@/lib/auth"
 import connectDB from "@/lib/db"
 import Favorite from "@/lib/models/favorite"
 import Gist from "@/lib/models/gist"
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Star, ClockIcon } from "lucide-react"
+import LoadingButton from "../components/loading-button"
 
 async function getFavoriteGists(userId: string) {
   await connectDB()
@@ -39,15 +40,19 @@ export default async function FavoritesPage() {
       {gists.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12">
           <div className="rounded-full bg-muted p-3">
-            <Star className="h-6 w-6" />
+            <Star className="h-6 w-6 text-amber-900" />
           </div>
           <h2 className="mt-4 text-lg font-semibold">No favorites found</h2>
-          <p className="mt-2 text-center text-muted-foreground">
+          <p className="mt-2  mb-5 text-center text-muted-foreground">
             You haven&apos;t added any gists to your favorites yet.
           </p>
-          <Link href="/dashboard" className="mt-4">
-            <Button>Browse your gists</Button>
-          </Link>
+          <LoadingButton
+          
+            href="/dashboard"
+            className="cursor-pointer bg-amber-800 hover:bg-amber-500 transform hover:scale-105 hover:shadow-md transition-all duration-200 "
+          >
+            Browse your gists
+          </LoadingButton>
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -83,11 +88,12 @@ export default async function FavoritesPage() {
                 </div>
               </CardFooter>
               <CardFooter className="pt-1">
-                <Link href={`/dashboard/gists/${gist._id}`} className="  w-full">
-                  <Button variant="outline" className="bg-amber-700 cursor-pointer w-full">
-                    View Gist
-                  </Button>
-                </Link>
+                <LoadingButton
+                  href={`/dashboard/gists/${gist._id}`}
+                  className="bg-amber-700 cursor-pointer w-full"
+                >
+                  View Gist
+                </LoadingButton>
               </CardFooter>
             </Card>
           ))}
