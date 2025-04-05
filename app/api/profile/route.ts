@@ -57,3 +57,23 @@ export async function PUT(request: NextRequest) {
   }
 }
 
+export async function DELETE() {
+  try {
+    const user = await getCurrentUser()
+
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    }
+
+    await connectDB()
+    await User.findByIdAndDelete(user._id)
+
+    return NextResponse.json({ message: "Account deleted successfully" }, { status: 200 })
+  } catch (error) {
+    if (error instanceof ProfileError) {
+      return NextResponse.json({ message: error.message }, { status: error.statusCode })
+    }
+    return NextResponse.json({ message: "Failed to delete account" }, { status: 500 })
+  }
+}
+
