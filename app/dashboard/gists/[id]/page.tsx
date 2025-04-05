@@ -14,7 +14,7 @@ import BackToDashboardButton from "../../components/back-to-dashboard-button"
 
 async function getGist(id: string) {
   await connectDB()
-  const gist = await Gist.findById(id)
+  const gist = await Gist.findById(id).populate('user', 'name')
 
   if (!gist) {
     notFound()
@@ -41,8 +41,9 @@ export default async function GistPage({ params }: { params: { id: string } }) {
       <div className="grid gap-4 sm:gap-6">
         <Card className="overflow-hidden">
           <CardHeader className="px-4 sm:px-6">
-            <div className="flex flex-col gap-3 sm:gap-4">
-              <div className="space-y-2">
+            <div className="flex flex-col gap-3 sm:gap-4 relative">
+              <span  className="absolute top-0 right-0 text-black cursor-pointer text-extrabold bg-blue-400 p-2 rounded-md"> By {gist.user.name} </span>
+              <div className="space-y-2 mt-6">
                 <CardTitle className="text-xl sm:text-2xl font-bold text-amber-800 break-words">{gist.title}</CardTitle>
                 <CardDescription className="text-sm sm:text-base">{gist.description || "No description provided"}</CardDescription>
               </div>
