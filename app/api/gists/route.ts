@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/server-auth"
 import connectDB from "@/lib/db"
 import Gist from "@/lib/models/gist"
 import { GistError, UnauthorizedError } from "@/lib/errors/gist-errors"
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const user = await getCurrentUser()
 
@@ -50,8 +50,29 @@ export async function GET() {
     }
 
     await connectDB()
+    
+    // Get query parameters
+    const url = new URL(request.url)
+    const userId = url.searchParams.get('userId')
+    
+    let query = {}
+    
+    if (userId) {
+      // If userId is provided, return only that user's gists
+      query = { user: userId }
+    } else {
+      // Otherwise, return all public gists and the user's own gists
+      query = {
+        $or: [
+          { isPublic: true },
+          { user: user._id }
+        ]
+      }
+    }
 
-    const gists = await Gist.find({ user: user._id }).sort({ createdAt: -1 })
+    const gists = await Gist.find(query)
+      .sort({ createdAt: -1 })
+      .populate('user', 'name')
 
     return NextResponse.json(gists, { status: 200 })
   } catch (error) {

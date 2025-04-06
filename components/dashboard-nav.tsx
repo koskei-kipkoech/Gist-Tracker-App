@@ -35,7 +35,7 @@ export function DashboardNav() {
       {/* Mobile Menu */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild className="lg:hidden">
-          <Button variant="ghost" size="icon" className="mr-2">
+          <Button variant="ghost" size="icon" className="text-orange-600 mr-2">
             <MenuIcon className="h-5 w-5" />
           </Button>
         </SheetTrigger>
@@ -44,7 +44,7 @@ export function DashboardNav() {
             <Link href="/dashboard" onClick={() => setIsOpen(false)}>
               <Button
                 variant="ghost"
-                className={`w-full justify-start ${pathname === "/dashboard" ? "bg-amber-700 hover:bg-amber-900" : ""}`}
+                className={`w-full justify-start ${pathname === "/dashboard" ? "bg-amber-700 cursor-pointer hover:bg-amber-900" : ""}`}
               >
                 <HomeIcon className="h-4 w-4 mr-2" />
                 Dashboard
@@ -53,7 +53,7 @@ export function DashboardNav() {
             <Link href="/dashboard/gists/new" onClick={() => setIsOpen(false)}>
               <Button
                 variant="ghost"
-                className={`w-full justify-start ${pathname === "/dashboard/gists/new" ? "bg-amber-700 hover:bg-amber-900" : ""}`}
+                className={`w-full justify-start ${pathname === "/dashboard/gists/new" ? "bg-amber-700 cursor-pointer hover:bg-amber-900" : ""}`}
               >
                 <PlusIcon className="h-4 w-4 mr-2" />
                 New Gist
@@ -62,7 +62,7 @@ export function DashboardNav() {
             <Link href="/dashboard/favorites" onClick={() => setIsOpen(false)}>
               <Button
                 variant="ghost"
-                className={`w-full justify-start ${pathname === "/dashboard/favorites" ? "bg-amber-700 hover:bg-amber-900" : ""}`}
+                className={`w-full justify-start ${pathname === "/dashboard/favorites" ? "bg-amber-700 cursor-pointer hover:bg-amber-900" : ""}`}
               >
                 <StarIcon className="h-4 w-4 mr-2" />
                 Favorites
@@ -71,7 +71,7 @@ export function DashboardNav() {
             <Link href="/dashboard/profile" onClick={() => setIsOpen(false)}>
               <Button
                 variant="ghost"
-                className={`w-full justify-start ${pathname === "/dashboard/profile" ? "bg-amber-700 hover:bg-amber-900" : ""}`}
+                className={`w-full justify-start ${pathname === "/dashboard/profile" ? "bg-amber-700 cursor-pointer hover:bg-amber-900" : ""}`}
               >
                 <UserIcon className="h-4 w-4 mr-2" />
                 Profile

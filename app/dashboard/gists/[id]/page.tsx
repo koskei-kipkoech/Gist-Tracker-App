@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/server-auth"
 import connectDB from "@/lib/db"
 import Gist from "@/lib/models/gist"
 import { Button } from "@/components/ui/button"
