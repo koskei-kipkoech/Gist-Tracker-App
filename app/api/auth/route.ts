@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import { authenticateUser, createUser, generateToken, setAuthCookie, removeAuthCookie, getCurrentUser } from '@/lib/server-auth'
+import { authenticateUser, generateToken, setAuthCookie, removeAuthCookie, getCurrentUser } from '@/lib/server-auth'
 
 export async function POST(request: Request) {
   try {
-    const { email, password, name } = await request.json()
+    const { email, password} = await request.json()
     const user = await authenticateUser(email, password)
     const token = generateToken(user)
     await setAuthCookie(token)
