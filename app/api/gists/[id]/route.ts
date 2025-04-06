@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/server-auth"
 import connectDB from "@/lib/db"
 import Gist from "@/lib/models/gist"
 import { GistError, UnauthorizedError, NotFoundError, ValidationError } from "@/lib/errors/gist-errors"
@@ -14,7 +14,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     await connectDB()
 
-    const gist = await Gist.findOne({ _id: params.id, user: user._id })
+    // Modified query to allow viewing any public gist or the user's own gists
+    const gist = await Gist.findOne({
+      _id: params.id,
+      $or: [
+        { isPublic: true },
+        { user: user._id }
+      ]
+    }).populate('user', 'name')
 
     if (!gist) {
       throw new NotFoundError()
