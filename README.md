@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![Gist Tracker Logo](public/file.svg)
-
 A modern, full-featured application for creating, managing, and sharing code snippets.
 
 [![Next.js](https://img.shields.io/badge/Next.js-13+-000000?style=for-the-badge&logo=next.js)](https://nextjs.org/)
