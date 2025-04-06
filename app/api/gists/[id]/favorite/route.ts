@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/server-auth"
 import connectDB from "@/lib/db"
 import Favorite from "@/lib/models/favorite"
 
