@@ -1,6 +1,6 @@
 import type React from "react"
 import { redirect } from "next/navigation"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/server-auth"
 import { DashboardNav } from "@/components/dashboard-nav"
 
 export default async function DashboardLayout({
