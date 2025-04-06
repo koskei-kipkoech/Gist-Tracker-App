@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { authenticateUser, generateToken, setAuthCookie } from "@/lib/auth"
+import { authenticateUser, generateToken, setAuthCookie } from "@/lib/server-auth"
 import { AuthError, ValidationError } from "@/lib/errors"
 
 export async function POST(request: NextRequest) {
