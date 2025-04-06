@@ -27,7 +27,6 @@ A modern, full-featured application for creating, managing, and sharing code sni
 - [Project Structure](#-project-structure)
 - [Deployment](#-deployment)
 - [Contributing](#-contributing)
-- [License](#-license)
 
 ## 🚀 Overview
 
@@ -111,9 +110,8 @@ yarn dev
 Create a `.env.local` file in the root directory with the following variables:
 
 ```
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+MONGODB_URI=your_mongodb_connection_string_here
+JWT_SECRET=your_jwt_secret_key_here
 ```
 
 ## 📖 Usage
